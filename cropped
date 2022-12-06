@@ -1,0 +1,29 @@
+import mne
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+folder = mne.datasets.sample.data_path()
+file = os.path.join(folder, 'MEG', 'sample', 'sample_audvis_raw.fif')
+raw = mne.io.read_raw_fif(file, preload = True)
+# raw = raw.pick_channels(['EEG F4-LE'], ordered = False, verbose = None)
+raw = raw.pick_types(meg=False, eeg=True, eog=False, exclude='bads')
+samf = raw.info['sfreq']
+
+a = 0
+b = a + 30
+start_time_array = []
+end_time_array = []
+while b <= 7200:
+    start_time_array = np.append(start_time_array, a)
+    end_time_array = np.append(end_time_array, b)
+    a += 30
+    b += 30
+for i in range(0,240):
+    start = i*30
+    stop = (i+1)*30
+    # print(f"{type(start)}, {type(stop)}")
+    # print([start, stop])
+cropped = raw.crop(tmin=start, tmax=stop)
+cropped.plot()
+plt.show()
