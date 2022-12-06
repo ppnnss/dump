@@ -24,6 +24,6 @@ for i in range(0,240):
     stop = (i+1)*30
     # print(f"{type(start)}, {type(stop)}")
     # print([start, stop])
-cropped = raw.crop(tmin=start, tmax=stop)
-cropped.plot()
-plt.show()
+    cropped = raw.crop(tmin=start, tmax=stop)
+    cropped.plot()
+    plt.show()
